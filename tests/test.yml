@@ -1,5 +1,16 @@
 ---
 - hosts: all
 
+  pre_tasks:
+    - name: Install git
+      apt:
+        update_cache: yes
+        cache_valid_time: 600
+        name: "{{ item }}"
+      with_items:
+        - git
+        - build-essential
+      when: ansible_os_family == 'Debian'
+
   roles:
     - role_under_test
